@@ -1,17 +1,18 @@
-import Todo from "./todo.js";
+import Todo from "./todo";
+import { getProjectById, updateProject } from "./projectService";
 
 function createTodo(todoDTO) {
   try {
     const todo = new Todo(todoDTO);
-    return todo;
+    const todoList = JSON.parse(localStorage.getItem("todoList")) || [];
+    todoList.push(todo);
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+    let project = getProjectById(todo.getProjectById);
+    project.todos.push(todo.id);
+    updateProject(project);
   } catch (error) {
     console.log(error.message);
   }
 }
 
-// {
-//   title: "webpack",
-//   description:
-//     "set up all webpack related task including install packages, config, create template, etc...",
-//   priority: Todo.PRIORITY.HIGH,
-// }
+export { createTodo };

@@ -1,7 +1,14 @@
 export default class Project {
-  constructor({ title, todos }) {
+  static id = 0;
+  constructor({ title, todos = [], isCompleted = false }) {
+    this._id = Project.id++;
     this._title = title;
-    this._todos = todos || [];
+    this._todos = todos;
+    this._isCompleted = isCompleted;
+  }
+
+  get id() {
+    return this._id;
   }
 
   get title() {
@@ -26,5 +33,13 @@ export default class Project {
 
   removeTodo(index) {
     this._todos.splice(index, 1);
+  }
+
+  get isCompleted() {
+    return this._isCompleted;
+  }
+
+  toggleIsCompleted() {
+    this._isCompleted = !this._isCompleted;
   }
 }

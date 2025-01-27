@@ -1,4 +1,5 @@
 export default class Todo {
+  static id = 0;
   static PRIORITY = {
     HIGH: "high",
     MEDIUM: "medium",
@@ -10,13 +11,21 @@ export default class Todo {
     dueDate = null,
     priority,
     isCompleted = false,
+    projectId,
   }) {
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
     this._priority = priority;
     this._isCompleted = isCompleted;
+    this._id = Todo.id++;
+    this._projectId = projectId;
   }
+
+  get id() {
+    return this._id;
+  }
+
   get title() {
     return this._title;
   }
@@ -74,5 +83,9 @@ export default class Todo {
 
   togggleIsCompleted() {
     this._isCompleted = !this.isCompleted;
+  }
+
+  get projectId() {
+    return this._projectId;
   }
 }
