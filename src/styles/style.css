@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+}
+
+nav {
+  border-right: 1px solid black;
+  height: 100vh;
+  width: 20%;
+}
+
+.projects-container {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+}

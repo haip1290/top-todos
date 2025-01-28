@@ -11,7 +11,6 @@ export default class Todo {
     dueDate = null,
     priority,
     isCompleted = false,
-    projectId,
   }) {
     this._title = title;
     this._description = description;
@@ -19,7 +18,6 @@ export default class Todo {
     this._priority = priority;
     this._isCompleted = isCompleted;
     this._id = Todo.id++;
-    this._projectId = projectId;
   }
 
   get id() {
@@ -83,9 +81,5 @@ export default class Todo {
 
   togggleIsCompleted() {
     this._isCompleted = !this.isCompleted;
-  }
-
-  get projectId() {
-    return this._projectId;
   }
 }

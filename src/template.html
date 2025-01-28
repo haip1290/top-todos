@@ -6,26 +6,66 @@
     <title>My Todos</title>
   </head>
   <body>
-    <h1>My Todos</h1>
-    <form action="" method="post" class="create-project">
-      <div class="form-controll">
-        <label for="project-title">Title</label>
-        <input
-          type="text"
-          name="title"
-          id="project-title"
-          required
-          minlength="1"
-          maxlength="36"
-        />
-        <div class="error-title" hidden>Title is required</div>
+    <div class="container">
+      <nav>
+        <button class="btn-open">Add Project</button>
+        <dialog>
+          <form action="" method="dialog" class="project-form">
+            <div class="form-control">
+              <label for="project-title">Title</label>
+              <input
+                type="text"
+                name="title"
+                id="project-title"
+                required
+                minlength="1"
+                maxlength="36"
+              />
+            </div>
+            <div class="form-control">
+              <button type="submit" class="btn-submit">Add</button>
+              <button type="reset">Reset</button>
+              <button class="btn-close" formmethod="dialog">Close</button>
+            </div>
+          </form>
+        </dialog>
+        <h2 class="list-header">Projects:</h2>
+        <div class="projects-container"></div>
+      </nav>
+
+      <div class="main">
+        <button class="btn-open">Add todo</button>
+        <dialog class="create-todo">
+          <form action="" method="dialog">
+            <div class="form-control">
+              <label for="todo-title">Title</label>
+              <input type="text" name="title" id="todo-title" />
+            </div>
+            <div class="form-control">
+              <label for="todo-des">Description</label>
+              <textarea name="description" id="todo-des"></textarea>
+            </div>
+            <div class="form-control">
+              <label for="todo-date">Due Date</label>
+              <input type="date" name="due-date" id="todo-date" />
+            </div>
+            <div class="form-control">
+              <label for="priority"></label>
+              <select name="priority" id="priority">
+                <option value="high">High</option>
+                <option value="meidium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+            <div>
+              <button class="btn-submit" type="submit">Add</button>
+              <button type="reset">Reset</button>
+              <button class="btn-close" formmethod="dialog">Close</button>
+            </div>
+          </form>
+        </dialog>
+        <div class="project-container"></div>
       </div>
-      <div class="form-controll">
-        <button type="submit" class="btn-submit">Create Project</button>
-        <button type="reset">Reset</button>
-      </div>
-    </form>
-    <h2 class="list-header">Projects:</h2>
-    <div class="projects-container"></div>
+    </div>
   </body>
 </html>

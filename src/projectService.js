@@ -6,6 +6,7 @@ function createProject(projectDTO) {
     const projectList = JSON.parse(localStorage.getItem("projectList")) || [];
     projectList.push(project);
     localStorage.setItem("projectList", JSON.stringify(projectList));
+    return project;
   } catch (error) {
     console.log(error.message);
   }
@@ -35,11 +36,9 @@ function updateProject(dto) {
 
 function getProjectById(id) {
   const projectList = JSON.parse(localStorage.getItem("projectList"));
-  return projectList
-    .map((dto) => {
-      DTOtoProject(dto);
-    })
-    .filter((project) => project.id === id);
+  projectList.forEach((dto) => DTOtoProject(dto));
+  const project = projectList.filter((project) => project.id === id)[0];
+  return project;
 }
 
 function getProjectByTitle(title) {
