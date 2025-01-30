@@ -3,6 +3,7 @@ import {
   getProjectById,
   updateProject,
   addTodoToProject,
+  DTOtoProject,
 } from "./projectService";
 
 function createTodo(todoDTO) {
@@ -18,8 +19,20 @@ function createTodo(todoDTO) {
   }
 }
 
+function deleteTodoById(id) {
+  const projectList = JSON.parse(localStorage.getItem("projectList"));
+  console.log(projectList);
+  projectList?.forEach((project) => {
+    DTOtoProject(project);
+    project.todos?.forEach((todo) => DTOtoTodo(todo));
+    const index = project.todos?.findIndex((todo) => todo.id == id);
+    if (index !== -1) project.todos.splice(index, 1);
+  });
+  localStorage.setItem("projectList", JSON.stringify(projectList));
+}
+
 function DTOtoTodo(dto) {
   Object.setPrototypeOf(dto, Todo.prototype);
 }
 
-export { createTodo, DTOtoTodo };
+export { createTodo, DTOtoTodo, deleteTodoById };

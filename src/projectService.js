@@ -2,6 +2,7 @@ import Project from "./project";
 
 function createProject(projectDTO) {
   try {
+    // create project then add to localStorage
     const project = new Project(projectDTO);
     const projectList = JSON.parse(localStorage.getItem("projectList")) || [];
     projectList.push(project);
@@ -21,17 +22,25 @@ function getAllProjects() {
 }
 
 function updateProjectTitle(dto) {
-  let project = DTOtoProject(dto);
-  let existingProject = getProjectById(project.id);
-  if (!existingProject) {
-    throw new Error(`Project with id ${project.id} not found`);
+  let findingProject = DTOtoProject(dto);
+  // get project list from localStorage
+  const projectList = JSON.parse(localStorage.getItem("projectList"));
+  if (projectList.length < 1) {
+    throw Error("No project to update");
   }
-  if (dto.title) {
-    existingProject.title = dto.title;
+  // fint the index of the project in the list
+  const index = projectList.findIndex(
+    (project) => project.id == findingProject.id,
+  );
+  if (!index) {
+    throw new Error(`Project with id ${findingProject.id} not found`);
   }
-  // if (Array.isArray(dto.todos)) {
-  //   existingProject.todos = [...dto.todos];
-  // }
+  // update title
+  if (findingProject.title) {
+    projectList[index].title = findingProject.title;
+  }
+  // save updated list to localStorage
+  localStorage.setItem("projectList", JSON.stringify(projectList));
 }
 
 function getProjectById(id) {
@@ -41,13 +50,10 @@ function getProjectById(id) {
   return project;
 }
 
-function getProjectByTitle(title) {
+function getProjectsByTitle(title) {
   const projectList = JSON.parse(localStorage.getItem("projectList"));
-  return projectList
-    .map((dto) => {
-      DTOtoProject(dto);
-    })
-    .filter((project) => project.title === title);
+  projectList.forEach((project) => DTOtoProject(project));
+  return projectList.filter((project) => project.title === title);
 }
 
 function addTodoToProject(todo) {
@@ -70,9 +76,10 @@ function DTOtoProject(dto) {
 
 export {
   createProject,
+  DTOtoProject,
   getAllProjects,
   getProjectById,
-  getProjectByTitle,
+  getProjectsByTitle,
   deleteProject,
   addTodoToProject,
 };

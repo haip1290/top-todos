@@ -1,5 +1,5 @@
 export default class Project {
-  static id = 0;
+  static id;
 
   constructor({ title, todos = [], isCompleted = false }) {
     this._id = Project.id++;

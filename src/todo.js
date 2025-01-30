@@ -1,5 +1,5 @@
 export default class Todo {
-  static id = 0;
+  static id;
   static PRIORITY = {
     HIGH: "high",
     MEDIUM: "medium",
