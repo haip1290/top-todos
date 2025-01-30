@@ -1,10 +1,11 @@
 import "./styles/style.css";
-import { createProject } from "./projectService";
+import { createProject, addTodoToProject } from "./projectService";
 import { createTodo } from "./todoService";
 import {
   displayAllProjects,
   displayFirstProject,
   displayProject,
+  displayTodo,
 } from "./displayController";
 
 console.log("Start app");
@@ -44,7 +45,13 @@ function addTodoHandler() {
   const descriptionInput = document.querySelector("#todo-des");
   const dueDateInput = document.querySelector("#todo-date");
   const priorityInput = document.querySelector("#priority");
-
+  const projectDiv = document.querySelector(".main .project");
+  if (!projectDiv) {
+    alert("There is no available project");
+    return;
+  }
+  const projectId = projectDiv.id;
+  console.log("div", projectDiv);
   const title = titleInput.value.trim();
   const description = descriptionInput.value.trim();
   const dueDate = dueDateInput.value;
@@ -54,9 +61,8 @@ function addTodoHandler() {
     return;
   }
 
-  createTodo({ title, description, dueDate, priority });
-  const projectDiv = document.querySelector(".project");
-  displayTodosByProjectId(projectDiv.id);
+  const todo = createTodo({ projectId, title, description, dueDate, priority });
+  displayTodo(todo);
   titleInput.value = "";
   descriptionInput.value = "";
   dueDateInput.value = "";

@@ -20,7 +20,7 @@ function getAllProjects() {
   return projectList;
 }
 
-function updateProject(dto) {
+function updateProjectTitle(dto) {
   let project = DTOtoProject(dto);
   let existingProject = getProjectById(project.id);
   if (!existingProject) {
@@ -29,15 +29,15 @@ function updateProject(dto) {
   if (dto.title) {
     existingProject.title = dto.title;
   }
-  if (Array.isArray(dto.todos)) {
-    existingProject.todos = [...dto.todos];
-  }
+  // if (Array.isArray(dto.todos)) {
+  //   existingProject.todos = [...dto.todos];
+  // }
 }
 
 function getProjectById(id) {
   const projectList = JSON.parse(localStorage.getItem("projectList"));
   projectList.forEach((dto) => DTOtoProject(dto));
-  const project = projectList.filter((project) => project.id === id)[0];
+  const project = projectList.find((project) => project.id == id);
   return project;
 }
 
@@ -48,6 +48,18 @@ function getProjectByTitle(title) {
       DTOtoProject(dto);
     })
     .filter((project) => project.title === title);
+}
+
+function addTodoToProject(todo) {
+  const projectList = JSON.parse(localStorage.getItem("projectList"));
+  projectList.forEach((dto) => DTOtoProject(dto));
+  const index = projectList.findIndex(
+    (project) => project.id == todo.projectId,
+  );
+  projectList[index].todos.push(todo);
+  localStorage.setItem("projectList", JSON.stringify(projectList));
+  const project = getProjectById(todo.projectId);
+  return project;
 }
 
 function deleteProject() {}
@@ -61,6 +73,6 @@ export {
   getAllProjects,
   getProjectById,
   getProjectByTitle,
-  updateProject,
   deleteProject,
+  addTodoToProject,
 };

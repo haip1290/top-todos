@@ -11,7 +11,10 @@ export default class Todo {
     dueDate = null,
     priority,
     isCompleted = false,
+    projectId,
   }) {
+    if (projectId === null) throw Error("Project ID is required");
+    this._projectId = projectId;
     this._title = title;
     this._description = description;
     this._dueDate = dueDate;
@@ -81,5 +84,9 @@ export default class Todo {
 
   togggleIsCompleted() {
     this._isCompleted = !this.isCompleted;
+  }
+
+  get projectId() {
+    return this._projectId;
   }
 }
