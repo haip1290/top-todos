@@ -13,7 +13,6 @@ import Todo from "./todo";
 console.log("Start app");
 
 document.addEventListener("DOMContentLoaded", () => {
-  // localStorage.clear();
   // setup diaglog to add project and todo
   setUpDialogProject();
   setUpDialogTodo();

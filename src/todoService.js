@@ -19,9 +19,27 @@ function createTodo(todoDTO) {
   }
 }
 
+function updateTodoById(dto) {
+  const projectList = JSON.parse(localStorage.getItem("projectList"));
+  let updatedTodo;
+  projectList?.some((project) => {
+    DTOtoProject(project);
+    if (project.id != dto.projectId) return false;
+    project.todos?.forEach((todo) => DTOtoTodo(todo));
+    const index = project.todos?.findIndex((todo) => todo.id == dto.id);
+    if (index !== -1) {
+      project.todos[index] = dto;
+      updatedTodo = project.todos[index];
+      return true;
+    }
+    return false;
+  });
+  localStorage.setItem("projectList", JSON.stringify(projectList));
+  return updatedTodo;
+}
+
 function deleteTodoById(id) {
   const projectList = JSON.parse(localStorage.getItem("projectList"));
-  console.log(projectList);
   projectList?.forEach((project) => {
     DTOtoProject(project);
     project.todos?.forEach((todo) => DTOtoTodo(todo));
@@ -35,4 +53,4 @@ function DTOtoTodo(dto) {
   Object.setPrototypeOf(dto, Todo.prototype);
 }
 
-export { createTodo, DTOtoTodo, deleteTodoById };
+export { createTodo, DTOtoTodo, deleteTodoById, updateTodoById };
