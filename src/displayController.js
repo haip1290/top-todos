@@ -1,4 +1,3 @@
-import { id } from "date-fns/locale";
 import { getAllProjects, getProjectById } from "./projectService";
 import { DTOtoTodo, updateTodoById, deleteTodoById } from "./todoService";
 
@@ -340,7 +339,7 @@ function createSaveBtnEditForm() {
   return saveBtn;
 }
 
-function updateTodo(event) {
+function updateTodo() {
   const id = "#" + document.querySelector("#edit-id").textContent;
   const target = document.querySelector(id);
   const todo = updateTodoDB(target.id.split("-").at(-1));
@@ -417,7 +416,7 @@ function createCancelBtnEditForm() {
   cancelBtn.type = "button";
   cancelBtn.formMethod = "dialog";
   cancelBtn.textContent = "Close";
-  cancelBtn.addEventListener("click", (event) => {
+  cancelBtn.addEventListener("click", () => {
     const dialog = document.querySelector(".dialog-edit");
     dialog.close();
   });
@@ -453,7 +452,6 @@ function priorityContentByPriorityLevel(priorityLevel, prioritySpan) {
 
     default:
       throw Error("Invalid priority level");
-      break;
   }
 }
 

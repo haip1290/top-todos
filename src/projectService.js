@@ -21,28 +21,6 @@ function getAllProjects() {
   return projectList;
 }
 
-function updateProjectTitle(dto) {
-  let findingProject = DTOtoProject(dto);
-  // get project list from localStorage
-  const projectList = JSON.parse(localStorage.getItem("projectList"));
-  if (projectList.length < 1) {
-    throw Error("No project to update");
-  }
-  // fint the index of the project in the list
-  const index = projectList.findIndex(
-    (project) => project.id == findingProject.id,
-  );
-  if (!index) {
-    throw new Error(`Project with id ${findingProject.id} not found`);
-  }
-  // update title
-  if (findingProject.title) {
-    projectList[index].title = findingProject.title;
-  }
-  // save updated list to localStorage
-  localStorage.setItem("projectList", JSON.stringify(projectList));
-}
-
 function getProjectById(id) {
   const projectList = JSON.parse(localStorage.getItem("projectList"));
   projectList.forEach((dto) => DTOtoProject(dto));

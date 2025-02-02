@@ -68,7 +68,7 @@ export default class Todo {
   }
 
   set priority(value) {
-    validPriorities = Object.values(Todo.PRIORITY);
+    let validPriorities = Object.values(Todo.PRIORITY);
     if (validPriorities.includes(value)) {
       this._priority = value;
     } else {

@@ -1,10 +1,5 @@
 import Todo from "./todo";
-import {
-  getProjectById,
-  updateProject,
-  addTodoToProject,
-  DTOtoProject,
-} from "./projectService";
+import { addTodoToProject, DTOtoProject } from "./projectService";
 
 function createTodo(todoDTO) {
   try {
