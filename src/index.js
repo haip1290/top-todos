@@ -29,22 +29,25 @@ document.addEventListener("DOMContentLoaded", () => {
   btnAddTodo.addEventListener("click", addTodoHandler);
 });
 
+/* create project in localStorage, then create project element on nav bar
+and display on main section */
 function addProjectHandler() {
-  const dialog = document.querySelector("nav dialog");
-
   const titleInput = document.querySelector("#project-title");
   const title = titleInput.value.trim();
   if (!title) {
     return;
   }
-
   const project = createProject({ title });
   titleInput.value = "";
   displayAllProjects();
   displayProject(project.id);
+
+  const dialog = document.querySelector("nav dialog");
   dialog.close();
 }
-
+/* Using user input in dialog, 
+create todo in localStorage
+create todo element under its project element */
 function addTodoHandler() {
   const dialog = document.querySelector(".main dialog");
   const titleInput = document.querySelector("#todo-title");
@@ -56,7 +59,7 @@ function addTodoHandler() {
     alert("There is no available project");
     return;
   }
-  const projectId = projectDiv.id;
+  const projectId = projectDiv.id.split("-").at(-1);
   const title = titleInput.value.trim();
   const description = descriptionInput.value.trim();
   const dueDate = dueDateInput.value;

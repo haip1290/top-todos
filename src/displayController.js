@@ -11,7 +11,7 @@ function displayAllProjects() {
   projectList.forEach((project) => {
     const projectDisplay = document.createElement("button");
     projectDisplay.classList.add("project");
-    projectDisplay.id = project.id;
+    projectDisplay.id = `nav-project-${project.id}`;
     projectDisplay.textContent = project.title;
     // add event handler when click button
     projectDisplay.addEventListener("click", () => {
@@ -49,7 +49,7 @@ function createProjectElement(project, container) {
   // create project element
   const projectDiv = document.createElement("div");
   projectDiv.className = "project";
-  projectDiv.id = project.id;
+  projectDiv.id = `project-${project.id}`;
 
   projectDiv.appendChild(createProjectHeader(project.title));
   projectDiv.appendChild(createTableHeader());
@@ -114,7 +114,7 @@ function displayTodo(todo) {
   // create todos div display details of todo
   const todoDiv = document.createElement("div");
   todoDiv.classList.add("todo");
-  todoDiv.id = todo.id;
+  todoDiv.id = `todo-${todo.id}`;
 
   const infoSection = createInfoSection(todo);
   todoDiv.appendChild(infoSection);
@@ -210,9 +210,9 @@ function createDelBtn() {
 
 function delTodo(event) {
   const target = event.target;
-  const todoId = target.closest(".todo").id;
+  const todoId = target.closest(".todo").id.split("-").at(-1);
   deleteTodoById(todoId);
-  const projectId = target.closest(".project").id;
+  const projectId = target.closest(".project").id.split("-").at(-1);
   displayProject(projectId);
 }
 
@@ -341,10 +341,9 @@ function createSaveBtnEditForm() {
 }
 
 function updateTodo(event) {
-  const id = document.querySelector("#edit-id").textContent;
-  const todoEleList = document.querySelectorAll(".todo");
-  const target = Array.from(todoEleList).find((element) => (element.id = id));
-  const todo = updateTodoDB(target.id);
+  const id = "#" + document.querySelector("#edit-id").textContent;
+  const target = document.querySelector(id);
+  const todo = updateTodoDB(target.id.split("-").at(-1));
 
   const dialog = document.querySelector(".dialog-edit");
   dialog.close();
@@ -360,12 +359,12 @@ function updateTodoDB() {
   const priorityInput = document.querySelector("#edit-priority");
   const projectElement = document.querySelector(".main .project");
 
-  const id = idInput.textContent;
+  const id = idInput.textContent.split("-").at(-1);
   const title = titleInput.value.trim();
   const description = descriptionInput.value.trim();
   const dueDate = dueDateInput.value;
   const priority = priorityInput.value;
-  const projectId = projectElement.id;
+  const projectId = projectElement.id.split("-").at(-1);
   const isCompleted = false;
 
   const dto = {
@@ -395,12 +394,14 @@ function updateTodoDisplay(target, todo) {
 
   title.textContent = todo.title;
   dueDate.textContent = todo.dueDate ? todo.dueDate : "N/A";
-  description.textContent = todo.description;
+  description.textContent = "Description: " + todo.description;
   priority.classList.forEach((className) => {
-    if (className.startsWith(".priority-")) {
+    if (className.startsWith("priority-")) {
       priority.classList.remove(className);
     }
   });
+  priority.classList.add("priority-" + todo.priority);
+  console.log(priority.classList);
 }
 
 function createResetBtnEditForm() {

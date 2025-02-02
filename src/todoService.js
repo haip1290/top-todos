@@ -22,11 +22,12 @@ function createTodo(todoDTO) {
 function updateTodoById(dto) {
   const projectList = JSON.parse(localStorage.getItem("projectList"));
   let updatedTodo;
+  const id = dto.id.split("-").at(-1);
   projectList?.some((project) => {
     DTOtoProject(project);
     if (project.id != dto.projectId) return false;
     project.todos?.forEach((todo) => DTOtoTodo(todo));
-    const index = project.todos?.findIndex((todo) => todo.id == dto.id);
+    const index = project.todos?.findIndex((todo) => todo.id == id);
     if (index !== -1) {
       project.todos[index] = dto;
       updatedTodo = project.todos[index];
